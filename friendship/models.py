@@ -26,6 +26,8 @@ from friendship.signals import (
     friendship_request_viewed,
 )
 
+from hashid_field import HashidAutoField
+
 AUTH_USER_MODEL = getattr(settings, "AUTH_USER_MODEL", "auth.User")
 
 CACHE_TYPES = {
@@ -83,6 +85,8 @@ def bust_cache(type, user_pk):
 
 class FriendshipRequest(models.Model):
     """ Model to represent friendship requests """
+
+    id = HashidAutoField(primary_key=True)
 
     from_user = models.ForeignKey(
         AUTH_USER_MODEL,
@@ -392,6 +396,7 @@ class FriendshipManager(models.Manager):
 
 class Friend(models.Model):
     """ Model to represent Friendships """
+    id = HashidAutoField(primary_key=True)
 
     to_user = models.ForeignKey(AUTH_USER_MODEL, models.CASCADE, related_name="friends")
     from_user = models.ForeignKey(
